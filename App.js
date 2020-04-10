@@ -14,6 +14,33 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 // context
 import { Provider as AuthProvider } from "./src/context/authContext";
 
+// theming
+import { ThemeProvider } from "react-native-elements";
+
+const theme = {
+  Text: {
+    h3Style: {
+      color: "green",
+      marginTop: 20,
+      marginBottom: 10
+    }
+  },
+  Input: {
+    containerStyle: {
+      marginVertical: 10
+    }
+  },
+  Button: {
+    containerStyle: {
+      marginVertical: 30
+    },
+    buttonStyle: {
+      backgroundColor: "green"
+    },
+    raised: true
+  }
+};
+
 const switchNavigator = createSwitchNavigator({
   loginFlow: createStackNavigator({
     Signup: SignupScreen,
@@ -34,7 +61,9 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <AuthProvider>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </AuthProvider>
   );
 };
