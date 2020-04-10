@@ -31,26 +31,35 @@ const SignupScreen = ({ navigation }) => {
   return (
     <ThemeProvider theme={theme}>
       <View style={styles.container}>
-        <Text h3>Sign Up for Tracker</Text>
-        <Input
-          label="Email"
-          leftIcon={<Icon name="email" size={24} color="gray" />}
-        />
-        <Input
-          label="Password"
-          leftIcon={<Icon name="lock" size={24} color="gray" />}
-        />
-        <Button title="Sign Up" />
+        <View>
+          <Text h3>Sign Up for Tracker</Text>
+          <Input
+            label="Email"
+            leftIcon={<Icon name="email" size={24} color="gray" />}
+          />
+          <Input
+            label="Password"
+            leftIcon={<Icon name="lock" size={24} color="gray" />}
+          />
+          <Button title="Sign Up" />
+        </View>
       </View>
     </ThemeProvider>
   );
+};
+
+SignupScreen.navigationOptions = {
+  headerShown: false
 };
 
 const styles = StyleSheet.create({
   //styles
 
   container: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    marginBottom: 50,
+    flex: 1,
+    justifyContent: "center"
   }
 });
 
