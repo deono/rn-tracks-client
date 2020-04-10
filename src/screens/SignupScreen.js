@@ -1,28 +1,57 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { View, StyleSheet } from "react-native";
+import { Text, Input, Button, ThemeProvider } from "react-native-elements";
+
+const theme = {
+  Text: {
+    h3Style: {
+      color: "green",
+      marginTop: 20,
+      marginBottom: 10
+    }
+  },
+  Input: {
+    containerStyle: {
+      marginVertical: 10
+    }
+  },
+  Button: {
+    containerStyle: {
+      marginVertical: 30
+    },
+    buttonStyle: {
+      backgroundColor: "green"
+    },
+    raised: true
+  }
+};
 
 const SignupScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>Sign up Screen</Text>
-      <Button
-        title="Go to Signin"
-        onPress={() => {
-          navigation.navigate("Signin");
-        }}
-      />
-      <Button
-        title="Go to main flow"
-        onPress={() => {
-          navigation.navigate("mainFlow");
-        }}
-      />
-    </View>
+    <ThemeProvider theme={theme}>
+      <View style={styles.container}>
+        <Text h3>Sign Up for Tracker</Text>
+        <Input
+          label="Email"
+          leftIcon={<Icon name="email" size={24} color="gray" />}
+        />
+        <Input
+          label="Password"
+          leftIcon={<Icon name="lock" size={24} color="gray" />}
+        />
+        <Button title="Sign Up" />
+      </View>
+    </ThemeProvider>
   );
 };
 
 const styles = StyleSheet.create({
   //styles
+
+  container: {
+    marginHorizontal: 20
+  }
 });
 
 export default SignupScreen;
