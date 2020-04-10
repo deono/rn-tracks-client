@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { View, StyleSheet } from "react-native";
 import { Text, Input, Button, ThemeProvider } from "react-native-elements";
@@ -28,21 +28,30 @@ const theme = {
 };
 
 const SignupScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <ThemeProvider theme={theme}>
       <View style={styles.container}>
-        <View>
-          <Text h3>Sign Up for Tracker</Text>
-          <Input
-            label="Email"
-            leftIcon={<Icon name="email" size={24} color="gray" />}
-          />
-          <Input
-            label="Password"
-            leftIcon={<Icon name="lock" size={24} color="gray" />}
-          />
-          <Button title="Sign Up" />
-        </View>
+        <Text h3>Sign Up for Tracker</Text>
+        <Input
+          value={email}
+          onChangeText={setEmail}
+          label="Email"
+          autoCapitalize="none"
+          autoCorrect={false}
+          leftIcon={<Icon name="email" size={24} color="gray" />}
+        />
+        <Input
+          secureTextEntry
+          label="Password"
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
+          leftIcon={<Icon name="lock" size={24} color="gray" />}
+        />
+        <Button title="Sign Up" />
       </View>
     </ThemeProvider>
   );
