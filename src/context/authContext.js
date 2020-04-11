@@ -1,9 +1,14 @@
 import createDataContext from "./createDataContext";
 import trackerApi from "../api/trackerApi";
 
+// types
+const ADD_ERROR = "ADD_ERROR";
+
 // reducer function
 const authReducer = (state, action) => {
   switch (action.type) {
+    case ADD_ERROR:
+      return { ...state, message: action.payload };
     default:
       return state;
   }
@@ -20,6 +25,10 @@ const signup = dispatch => {
     } catch (error) {
       // failure - handle signup failures
       console.log(error.response.data);
+      dispatch({
+        type: ADD_ERROR,
+        payload: error.response.data.message
+      });
     }
   };
 };
@@ -41,5 +50,5 @@ const signout = dispatch => {
 export const { Provider, Context } = createDataContext(
   authReducer,
   { signin, signout, signup },
-  { isSignedIn: false }
+  { isSignedIn: false, message: "" }
 );

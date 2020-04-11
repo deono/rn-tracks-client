@@ -32,7 +32,7 @@ const theme = {
   },
   Button: {
     containerStyle: {
-      marginVertical: 30
+      marginVertical: 10
     },
     buttonStyle: {
       backgroundColor: "green"

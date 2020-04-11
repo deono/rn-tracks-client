@@ -8,6 +8,7 @@ const SignupScreen = ({ navigation }) => {
   const { state, signup } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   return (
     <View style={styles.container}>
       <Text h3>Sign Up for Tracker</Text>
@@ -26,8 +27,10 @@ const SignupScreen = ({ navigation }) => {
         onChangeText={setPassword}
         autoCapitalize="none"
         autoCorrect={false}
+        errorMessage={state.message}
         leftIcon={<Icon name="lock" size={24} color="gray" />}
       />
+
       <Button title="Sign Up" onPress={() => signup({ email, password })} />
     </View>
   );
