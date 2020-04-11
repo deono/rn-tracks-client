@@ -1,6 +1,7 @@
 import createDataContext from "./createDataContext";
 import trackerApi from "../api/trackerApi";
 import { AsyncStorage } from "react-native";
+import { navigate } from "../navigationRef";
 
 // types
 const SIGNUP_ERROR = "SIGNUP_ERROR";
@@ -33,6 +34,8 @@ const signup = dispatch => async ({ email, password }) => {
       payload: response.data.token,
       message: response.data.message
     });
+    // navigate to the main flow
+    navigate("TrackList");
   } catch (error) {
     // failure case - handle signup failures
     console.log(error.response.data.message);

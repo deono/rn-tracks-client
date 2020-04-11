@@ -2,6 +2,7 @@ import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import { setNavigator } from "./src/navigationRef";
 
 // screens
 import AccountScreen from "./src/screens/AccountScreen";
@@ -58,11 +59,18 @@ const switchNavigator = createSwitchNavigator({
 
 const App = createAppContainer(switchNavigator);
 
+// the ref prop in app is a function that gets called with
+// the navigator object. Acts like a hook into the navigator
+// to be used outside a React component.
 export default () => {
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <App />
+        <App
+          ref={navigator => {
+            setNavigator(navigator);
+          }}
+        />
       </ThemeProvider>
     </AuthProvider>
   );
