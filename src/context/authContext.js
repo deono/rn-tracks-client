@@ -1,36 +1,46 @@
 import createDataContext from "./createDataContext";
 import trackerApi from "../api/trackerApi";
+import { AsyncStorage } from "react-native";
 
 // types
-const ADD_ERROR = "ADD_ERROR";
+const SIGNUP_ERROR = "SIGNUP_ERROR";
+const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
 // reducer function
 const authReducer = (state, action) => {
   switch (action.type) {
-    case ADD_ERROR:
-      return { ...state, message: action.payload };
+    case SIGNUP_ERROR:
+      return { ...state, message: action.message };
+    case SIGNUP_SUCCESS:
+      return { ...state, token: action.payload, message: action.message };
     default:
       return state;
   }
 };
 
 // action functions
-const signup = dispatch => {
-  return async ({ email, password }) => {
-    try {
-      // make an api request to /signup with email and password
-      const response = await trackerApi.post("/signup", { email, password });
-      // success -modify the state to indicate the user is authenticated
-      console.log("response", response.data);
-    } catch (error) {
-      // failure - handle signup failures
-      console.log(error.response.data);
-      dispatch({
-        type: ADD_ERROR,
-        payload: error.response.data.message
-      });
-    }
-  };
+const signup = dispatch => async ({ email, password }) => {
+  try {
+    // make an api request to /signup with email and password
+    const response = await trackerApi.post("/signup", { email, password });
+    // success case
+    // save the token in local storage
+    console.log("token", response.data.payload);
+    await AsyncStorage.setItem("token", response.data.payload);
+    // store the token in the state object
+    dispatch({
+      type: SIGNUP_SUCCESS,
+      payload: response.data.token,
+      message: response.data.message
+    });
+  } catch (error) {
+    // failure case - handle signup failures
+    console.log(error.response.data.message);
+    dispatch({
+      type: SIGNUP_ERROR,
+      message: error.response.data.message
+    });
+  }
 };
 
 const signin = dispatch => {
