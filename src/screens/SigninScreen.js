@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Button } from "react-native";
 const SigninScreen = ({ navigation }) => {
   return (
     <View>
-      <Text>Sign up Screen</Text>
+      <Text>Sign in Screen</Text>
       <Button
         title="Go to Signup"
         onPress={() => {

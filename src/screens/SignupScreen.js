@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
 import { Context as AuthContext } from "../context/authContext";
 
@@ -32,6 +32,11 @@ const SignupScreen = ({ navigation }) => {
       />
 
       <Button title="Sign Up" onPress={() => signup({ email, password })} />
+      <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
+        <Text style={styles.linkStyles}>
+          Already have an account? Sign in instead.
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -42,12 +47,16 @@ SignupScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   //styles
-
   container: {
     marginHorizontal: 20,
     marginBottom: 50,
     flex: 1,
     justifyContent: "center"
+  },
+  linkStyles: {
+    marginTop: 20,
+    color: "blue",
+    textDecorationLine: "underline"
   }
 });
 
