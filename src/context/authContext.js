@@ -7,11 +7,16 @@ import { navigate } from "../navigationRef";
 const SIGNUP_ERROR = "SIGNUP_ERROR";
 const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
+const SIGNIN_ERROR = "SIGNIN_ERROR";
+const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
+
 // reducer function
 const authReducer = (state, action) => {
   switch (action.type) {
+    case SIGNIN_ERROR:
     case SIGNUP_ERROR:
       return { ...state, message: action.message };
+    case SIGNIN_SUCCESS:
     case SIGNUP_SUCCESS:
       return { ...state, token: action.payload, message: action.message };
     default:
@@ -46,12 +51,29 @@ const signup = dispatch => async ({ email, password }) => {
   }
 };
 
-const signin = dispatch => {
-  return ({ email, password }) => {
+const signin = dispatch => async ({ email, password }) => {
+  try {
     // make api request
-    // success - modify the state
+    const response = await trackerApi.post("/signin", { email, password });
+    console.log("token", response.data.payload);
+    // save the token in local storage
+    await AsyncStorage.setItem("token", response.data.payload);
+    // success - store the token in state
+    dispatch({
+      type: SIGNIN_SUCCESS,
+      payload: response.data.token,
+      message: response.data.message
+    });
+    // navigate to the main flow
+    navigate("TrackList");
+  } catch (error) {
     // failure - handle failure
-  };
+    console.log("signin error", error.response.data.message);
+    dispatch({
+      type: SIGNIN_ERROR,
+      message: error.response.data.message
+    });
+  }
 };
 
 const signout = dispatch => {
@@ -63,5 +85,5 @@ const signout = dispatch => {
 export const { Provider, Context } = createDataContext(
   authReducer,
   { signin, signout, signup },
-  { isSignedIn: false, message: "" }
+  { token: null, message: "", loading: false }
 );
