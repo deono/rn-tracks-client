@@ -4,6 +4,8 @@ import { AsyncStorage } from "react-native";
 import { navigate } from "../navigationRef";
 
 // types
+const CLEAR_AUTH_MESSAGE = "CLEAR_AUTH_MESSAGE";
+
 const SIGNUP_ERROR = "SIGNUP_ERROR";
 const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
@@ -13,6 +15,8 @@ const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 // reducer function
 const authReducer = (state, action) => {
   switch (action.type) {
+    case CLEAR_AUTH_MESSAGE:
+      return { ...state, message: "" };
     case SIGNIN_ERROR:
     case SIGNUP_ERROR:
       return { ...state, message: action.message };
@@ -22,6 +26,12 @@ const authReducer = (state, action) => {
     default:
       return state;
   }
+};
+
+const clearAuthMessage = dispatch => () => {
+  dispatch({
+    type: CLEAR_AUTH_MESSAGE
+  });
 };
 
 // action functions
@@ -84,6 +94,6 @@ const signout = dispatch => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup },
+  { clearAuthMessage, signin, signout, signup },
   { token: null, message: "", loading: false }
 );
