@@ -28,7 +28,9 @@ const theme = {
   },
   Input: {
     containerStyle: {
-      marginVertical: 10
+      marginVertical: 10,
+      marginLeft: 0,
+      paddingLeft: 0
     }
   },
   Button: {
