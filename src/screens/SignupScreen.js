@@ -1,37 +1,19 @@
 import React, { useState, useContext } from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, Input, Button } from "react-native-elements";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Context as AuthContext } from "../context/authContext";
+import AuthForm from "../components/AuthForm";
 
 const SignupScreen = ({ navigation }) => {
   const { state, signup } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-      <Text h3>Sign Up for Tracker</Text>
-      <Input
-        value={email}
-        onChangeText={setEmail}
-        label="Email"
-        autoCapitalize="none"
-        autoCorrect={false}
-        leftIcon={<Icon name="email" size={24} color="gray" />}
+      <AuthForm
+        headerText="Sign up for Tracker"
+        message={state.message}
+        buttonText="Sign up"
+        onSubmit={signup}
       />
-      <Input
-        secureTextEntry
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        autoCorrect={false}
-        errorMessage={state.message}
-        leftIcon={<Icon name="lock" size={24} color="gray" />}
-      />
-
-      <Button title="Sign Up" onPress={() => signup({ email, password })} />
       <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
         <Text style={styles.linkStyles}>
           Already have an account? Sign in instead.
