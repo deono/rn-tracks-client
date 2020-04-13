@@ -11,6 +11,7 @@ import SigninScreen from "./src/screens/SigninScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackCreateScreen from "./src/screens/TrackCreateScreen";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 
 // context
 import { Provider as AuthProvider } from "./src/context/authContext";
@@ -45,6 +46,7 @@ const theme = {
 };
 
 const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
   loginFlow: createStackNavigator({
     Signup: SignupScreen,
     Signin: SigninScreen

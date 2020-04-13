@@ -34,6 +34,19 @@ const clearAuthMessage = dispatch => () => {
   });
 };
 
+const tryLocalSignin = dispatch => async () => {
+  const token = await AsyncStorage.getItem("token");
+  if (token) {
+    dispatch({
+      type: SIGNIN_SUCCESS,
+      payload: token
+    });
+    navigate("TrackList");
+  } else {
+    navigate("Signup");
+  }
+};
+
 // action functions
 const signup = dispatch => async ({ email, password }) => {
   try {
@@ -46,7 +59,7 @@ const signup = dispatch => async ({ email, password }) => {
     // store the token in the state object
     dispatch({
       type: SIGNUP_SUCCESS,
-      payload: response.data.token,
+      payload: response.data.payload,
       message: response.data.message
     });
     // navigate to the main flow
@@ -71,8 +84,7 @@ const signin = dispatch => async ({ email, password }) => {
     // success - store the token in state
     dispatch({
       type: SIGNIN_SUCCESS,
-      payload: response.data.token,
-      message: response.data.message
+      payload: response.data.payload
     });
     // navigate to the main flow
     navigate("TrackList");
@@ -94,6 +106,6 @@ const signout = dispatch => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { clearAuthMessage, signin, signout, signup },
+  { tryLocalSignin, clearAuthMessage, signin, signout, signup },
   { token: null, message: "", loading: false }
 );
