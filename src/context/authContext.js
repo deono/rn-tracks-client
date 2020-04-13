@@ -12,6 +12,8 @@ const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 const SIGNIN_ERROR = "SIGNIN_ERROR";
 const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 
+const SIGN_OUT = "SIGN_OUT";
+
 // reducer function
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -23,6 +25,8 @@ const authReducer = (state, action) => {
     case SIGNIN_SUCCESS:
     case SIGNUP_SUCCESS:
       return { ...state, token: action.payload, message: action.message };
+    case SIGN_OUT:
+      return { token: null, message: "" };
     default:
       return state;
   }
@@ -98,10 +102,14 @@ const signin = dispatch => async ({ email, password }) => {
   }
 };
 
-const signout = dispatch => {
-  return () => {
-    // sign the user out
-  };
+const signout = dispatch => async () => {
+  // sign the user out
+  await AsyncStorage.removeItem("token");
+  dispatch({
+    type: SIGN_OUT
+  });
+  // navigate to the signup page
+  navigate("Signup");
 };
 
 export const { Provider, Context } = createDataContext(
