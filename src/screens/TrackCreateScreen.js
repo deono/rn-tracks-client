@@ -20,7 +20,7 @@ const TrackCreateScreen = () => {
     } else {
       setError(null);
     }
-    let location = await watchPositionAsync(
+    await watchPositionAsync(
       {
         accuracy: Accuracy.BestForNavigation,
         timeInterval: 1000,

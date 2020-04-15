@@ -15,6 +15,7 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 
 // context
 import { Provider as AuthProvider } from "./src/context/authContext";
+import { Provider as LocationProvider } from "./src/context/LocationContext";
 
 // theming
 import { ThemeProvider } from "react-native-elements";
@@ -68,14 +69,16 @@ const App = createAppContainer(switchNavigator);
 // to be used outside a React component.
 export default () => {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <App
-          ref={navigator => {
-            setNavigator(navigator);
-          }}
-        />
-      </ThemeProvider>
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <App
+            ref={navigator => {
+              setNavigator(navigator);
+            }}
+          />
+        </ThemeProvider>
+      </AuthProvider>
+    </LocationProvider>
   );
 };
