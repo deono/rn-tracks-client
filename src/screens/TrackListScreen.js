@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Text, Button } from "react-native-elements";
 
 const TrackListScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>Track List Screen</Text>
+    <View style={styles.container}>
+      <Text h3>Track List Screen</Text>
       <Button
         title="Go to Track Detail"
         onPress={() => {
@@ -17,6 +18,9 @@ const TrackListScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   //styles
+  container: {
+    marginHorizontal: 20
+  }
 });
 
 export default TrackListScreen;

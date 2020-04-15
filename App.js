@@ -24,7 +24,7 @@ const theme = {
   Text: {
     h3Style: {
       color: "green",
-      marginTop: 30,
+      marginTop: 5,
       marginBottom: 10
     }
   },
