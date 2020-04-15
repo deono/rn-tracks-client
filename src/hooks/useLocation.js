@@ -5,8 +5,9 @@ import {
   watchPositionAsync
 } from "expo-location";
 
-export default callback => {
+export default (shouldTrack, callback) => {
   const [error, setError] = useState(null);
+  const [subscriber, setSubscriber] = useState(null);
 
   const startWatching = async () => {
     let { status } = await requestPermissionsAsync();
@@ -15,7 +16,7 @@ export default callback => {
     } else {
       setError(null);
     }
-    await watchPositionAsync(
+    const sub = await watchPositionAsync(
       {
         accuracy: Accuracy.BestForNavigation,
         timeInterval: 1000,
@@ -26,11 +27,18 @@ export default callback => {
         callback(location);
       }
     );
+    setSubscriber(sub);
   };
 
   useEffect(() => {
-    startWatching();
-  }, []);
+    if (shouldTrack) {
+      startWatching();
+    } else {
+      // stop watching
+      subscriber.remove();
+      setSubscriber(null);
+    }
+  }, [shouldTrack]);
 
   return [error];
 };
